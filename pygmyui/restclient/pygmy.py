@@ -155,20 +155,6 @@ class PygmyApiClient(Client):
         return resp
 
     @catch_connection_error
-    def signup(self, data):
-        """Signup
-        :param data:
-        :return: dict
-        """
-        _ = data.pop('confirm_password')
-        url_path = '/api/user'
-        r = self.call(url_path, data=data)
-        resp = r.json()
-        if resp.get('short_url'):
-            resp['short_url'] = self.makeurl(self.HOSTNAME, resp['short_code'])
-        return resp
-
-    @catch_connection_error
     def list_links(self, access_token):
         """List of all user links.
         :param access_token:

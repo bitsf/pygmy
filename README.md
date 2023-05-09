@@ -53,7 +53,7 @@ The architecture is very loosely coupled which allows custom integrations easily
 - Customized short URL's(ex: `pygy.co/pygmy`)
 - Support to create auto expiry URL after some time.
 - Secret key protected URL's
-- User Login/Sign up to track shortened URL's and link stats
+- User Login to track shortened URL's and link stats
 - User dashboard
 - Link Analytics(add + to the tiny URL to get link stats)
 

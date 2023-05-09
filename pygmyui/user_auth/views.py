@@ -80,31 +80,3 @@ def logout(request):
         for k in cookie_keys:
             response.delete_cookie(key=k)
         return response
-
-
-def signup(request):
-    if request.method == 'GET':
-        return redirect('/')
-
-    if request.method == 'POST':
-        pygmy_client = pygmy_client_object(settings, request)
-        form = SignUpForm(request.POST)
-        context = dict(form=form)
-        if not form.is_valid():
-            return render(request, "invalid_form.html", context=context, status=400)
-        context['signup_success'] = True
-        try:
-            user_obj = pygmy_client.signup(form.cleaned_data)
-            context = {'email': user_obj['email'],
-                       'f_name': user_obj['f_name'],
-                       REFRESH_COOKIE_NAME: user_obj['refresh_token']}
-        except (InvalidInput, ObjectNotFound) as e:
-            return render(request, '400.html',
-                          context=API_ERROR(e.args[0]), status=400)
-        response = redirect('/')
-        expires = datetime.datetime.utcnow() + datetime.timedelta(days=7)
-        _ = [response.set_cookie(
-                k, v, expires=expires) for k, v in context.items()]
-        # access token lifetime till browser session
-        response.set_cookie(AUTH_COOKIE_NAME, user_obj['access_token'])
-        return response
