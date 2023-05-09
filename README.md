@@ -1,7 +1,7 @@
 <p align="center"><img src="pygmyui/static/logo/logov2.png" alt="pygmy" height="200px"></p>
 
 <div align="center">
-  <h1>Pygmy</h1>
+  <h1>herme.li</h1>
 
 <!-- [![Build Status](https://travis-ci.org/amitt001/pygmy.svg?branch=master)](https://travis-ci.org/amitt001/pygmy) -->
 

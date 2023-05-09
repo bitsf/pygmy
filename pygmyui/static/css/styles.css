@@ -3,12 +3,12 @@
 }
 
 body {
-    padding-top: 90px;
+    padding-top: 120px;
+    background-color: #ecf0f1;
 }
 
 .bg-color-dark {
-    background-color: #6FCC48;
-    /*rgb(10, 25, 34);*/
+    background-color: #1abc9c;
 }
 
 .element-border {
@@ -35,6 +35,10 @@ ul.dropdown-lr {
     width: 90%;
 }
 
+.container-fluid {
+    max-width: 85em;
+}
+
 .horizontal-center {
   width: 90%;
   display: flex;
@@ -54,6 +58,19 @@ ul.dropdown-lr {
 
 .url-form {
 margin-top: 3%;
+}
+
+nav {
+    background-color: #1abc9c;
+}
+
+.nav {
+    padding-left: 3em;
+    font-size: 20px;
+}
+
+.navbar {
+    min-height: 100px;
 }
 
 /* Responsive toggle navbar start*/
@@ -91,7 +108,7 @@ margin-top: 3%;
 
 .big-text {
     font-family: Monaco, Georgia, Times, "Times New Roman", serif;
-	font-size: 12px;
+	font-size: 15px;
 	font-style: normal;
 	font-variant: normal;
 	line-height: 21px;
@@ -109,7 +126,7 @@ margin-top: 3%;
 .navbar .nav > li > a:focus,
 .navbar .nav > li > a:active,
 .navbar .nav > li > a:visited {
-    background-color: #599B36;
+    background-color: #1abc9c;
 }
 
 .item-detail-title {
@@ -123,7 +140,7 @@ margin-top: 3%;
 }
 
 .item-detail-created-date {
-    color: #8f989d;
+    color: black;
     letter-spacing: .3px;
     font: 1.1rem/1.5rem "Proxima Nova";
     text-transform: uppercase;

@@ -4,11 +4,7 @@
     <!--Meta-->
     <meta charset="UTF-8">
     <meta lang="en">
-    {% if title %}
-    <title>{{ title }} | URL Shortener</title>
-    {% else %}
-    <title>Pygmy | URL Shortener </title>
-    {% endif %}
+    <title>Herme.li</title>
     <!--Mobile Friendly-->
     <script src="//ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
     <script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
@@ -21,11 +17,11 @@
     <script src="//cdnjs.cloudflare.com/ajax/libs/clipboard.js/1.7.1/clipboard.min.js"></script>
     <script src="/static/js/app.js"></script>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Pygmy(pygy.co): Open-source, extensible & easy-to-use URL shortener. One of the most powerful, feature-rich open-source URL shortener. Pygy.co is written in python 3">
-    <meta name="keywords" content="Pygmy,URL Shortener,pygy,pygyco,open source url shortener,python url shortener">
+    <meta name="description" content="herme.li - Herrmann AG URL shortener based on Python web-app pygmy">
+    <meta name="keywords" content="Herme,Hemeli,herme.li,Herrmann AG,Pygmy,URL Shortener,pygy,pygyco,open source url shortener,python url shortener">
   </head>
   <body>
-    <nav class="navbar navbar-light navbar-fixed-top" role="navigation" style="background-color:#6FBF45">
+    <nav class="navbar navbar-light navbar-fixed-top" role="navigation">
     <!--#00FA9A;">-->
       <div class="container-fluid">
         <div class="navbar-header">
@@ -36,22 +32,20 @@
           <span class="icon-bar"></span>
           </button>
           <a class="navbar-brand" href="/" style="color: white; font-size: 30px">
-            <img style="background-color: white;"
-                 src="/static/logo/logov2.svg"
-                 onerror="this.src='/static/logo/logov2.png'"
-                 alt="Pygy.co (Pygmy) logo"
+            <img src="/static/logo/logo.svg"
+                 onerror="this.src='/static/logo/logo.png'"
+                 alt="herme.li logo"
                  height="70"
                  width="150">
           </a>
         </div>
-        <div id="navbar" class="collapse navbar-collapse">
+        <div id="navbar" class="collapse navbar-collapse" style="margin-top: 25px;">
           <ul class="nav navbar-nav">
             {% if request.COOKIES.refresh_token %}
               <li><a href="/dashboard">DASHBOARD</a></li>
             {% endif %}
+            <li><a href="/">HOME</a></li>
             <li><a href="/about">ABOUT</a></li>
-            <li><a href="/contact">CONTACT</a></li>
-            <li><a href="https://github.com/amitt001/pygmy">GITHUB</a></li>
           </ul>
           <ul class="nav navbar-nav navbar-right">
 {% if not request.COOKIES.refresh_token %}
@@ -69,41 +63,26 @@
                       <input type="text" name="email" id="username" tabindex="1" class="form-control" placeholder="Email" value="" autocomplete="off">
                     </div>
                     <div class="form-group">
-                      <label for="password">Password</label>
+                      <label for="password">Passwort</label>
                       <input type="password" name="password" id="login_password" tabindex="2" class="form-control" placeholder="Password" autocomplete="off">
                     </div>
-                    <div class="form-group">
-                      <div class="row">
-                        <!--<div class="col-xs-7">-->
-                          <!--<input type="checkbox" tabindex="3" name="remember" id="remember">-->
-                          <!--<label for="remember"> Remember Me</label>-->
-                        <!--</div>-->
-                        <div class="col-xs-5 pull-right">
-                          <input type="submit" name="login-submit" id="login-submit" tabindex="4" class="form-control btn btn-success" value="Log In">
+                    <div class="form-group" style="text-align: center;">
+                      <div class="row" style="display: inline-block;">
+                        <div class="col-xs-5" style="width: 10em;">
+                          <input type="submit" name="login-submit" id="login-submit" tabindex="4" class="form-control btn btn-success" value="Anmelden">
                         </div>
                       </div>
                     </div>
-                    <!--Forgot password block-->
-                    <!--<div class="form-group">-->
-                      <!--<div class="row">-->
-                        <!--<div class="col-lg-12">-->
-                          <!--<div class="text-center">-->
-                            <!--<a href="/forgot" tabindex="5" class="forgot-password">Forgot Password?</a>-->
-                          <!--</div>-->
-                        <!--</div>-->
-                      <!--</div>-->
-                    <!--</div>-->
                   </form>
                 </div>
               </ul>
             </li>
 {% else %}
           <li class="dropdown">
-              <a href="#" class="dropdown-toggle" data-toggle="dropdown">Welcome {{ request.COOKIES.f_name }}<span class="caret"></span></a>
+              <a href="#" class="dropdown-toggle" data-toggle="dropdown">Willkommen {{ request.COOKIES.f_name }}<span class="caret"></span></a>
               <ul class="dropdown-menu" role="menu">
                 <li><a href="/dashboard">Dashboard</a></li>
-                <!--<li><a href="/settings">Settings</a></li>-->
-                <li><a href="/logout">Logout</a></li>
+                <li><a href="/logout">Abmelden</a></li>
               </ul>
             </li>
 {% endif %}
