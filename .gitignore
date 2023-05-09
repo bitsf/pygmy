@@ -4,6 +4,8 @@
 *.log
 .coverage
 bootstrap.min.css
+pyvenv.cfg
+.python-version
 
 # Directory
 *.egg-info/
@@ -16,3 +18,7 @@ dist
 .DS_Store
 .cache
 .pytest_cache/
+bin
+lib
+include
+lib64
