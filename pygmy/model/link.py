@@ -22,7 +22,6 @@ class Link(Model):
 
     id = Column(Integer, primary_key=True, autoincrement=True)
     long_url = Column(Unicode(1000), index=True)
-    # TODO pull values from long url
     protocol = Column(String(10), default='http://')
     domain = Column(String(300), )
     long_url_hash = Column(BigInteger, index=True)
@@ -133,7 +132,6 @@ class LinkManager:
             query_dict['is_custom'] = kwargs.get('is_custom')
         if kwargs.get('is_protected') is not None:
             query_dict['is_protected'] = kwargs.get('is_protected')
-        # TODO: handle disabled
         return query_dict
 
     @dbconnection
@@ -165,7 +163,6 @@ class LinkManager:
 
     @dbconnection
     def add(self, db, long_url, **kwargs):
-        # TODO: verify/escape input
         if db.bind.name == 'mysql':
             kwargs['created_at'] = datetime.datetime.utcnow()
             kwargs['updated_at'] = datetime.datetime.utcnow()
@@ -275,11 +272,8 @@ class LinkManager:
         # build sqlalchmey and query
         query = [getattr(Link, k) == v for k, v in query_dict.items()]
         url = db.query(Link).filter(and_(*query))
-        # q = str(
-        # url.statement.compile(compile_kwargs={"literal_binds": True}))
         if url.count() < 1:
             return None
-        # TODO: handle multiple in case of empty query dict
         self.link = url.one()
         return self.link
 

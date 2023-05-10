@@ -86,7 +86,6 @@ class PygmyIntegrationTest(unittest.TestCase):
         :param response: requests.response object
         :return: str
         """
-        # TODO: Fix this
         resp_text = response.text
         idx = resp_text.find(self.url)
         idx_end = resp_text.find('" readonly autofocus id="short_url_blocked"')

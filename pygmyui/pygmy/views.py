@@ -12,7 +12,7 @@ from restclient.errors import ObjectNotFound, UnAuthorized, LinkExpired, \
 from restclient.error_msg import API_ERROR, INVALID_TOKEN
 from iso2full import iso2full
 
-# TODO: [IMP] middleware to return 500 page when internal error occurs.
+
 AUTH_COOKIE_NAME = settings.AUTH_COOKIE_NAME
 MAX_SHORT_CODE_LEN = 8
 INVALID_CUSTOM_CODE_ERROR = ("Ungültige Eingabe, URL sollte unter 8 Zeichen lang sein"
@@ -75,10 +75,8 @@ def link_shortener(request):
 
 
 def get_short_link(request, code):
-    """TODO: Validate code"""
     if request.method == 'GET':
         try:
-            # TODO: use urljoin
             schema = 'https://' if request.is_secure() else 'http://'
             url_obj = {}
             url_obj['short_url'] = (
@@ -163,7 +161,6 @@ def link_auth(request):
         except ObjectNotFound as e:
             return render(
                 request, '404.html', context=API_ERROR(e.args[0]), status=404)
-        # return redirect(long_url, permanent=True)
         return JsonResponse(response)
 
 

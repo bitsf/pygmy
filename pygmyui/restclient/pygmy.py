@@ -6,9 +6,7 @@ from restclient.errors import (
     ObjectNotFound, UnAuthorized, LinkExpired, InvalidInput)
 from urllib.parse import urlparse
 
-__all__ = [
-    'PygmyApiClient'
-]
+__all__ = ['PygmyApiClient']
 
 AUTH_COOKIE_NAME = 'access_token'
 REFRESH_COOKIE_NAME = 'refresh_token'

@@ -31,7 +31,6 @@ def catch_connection_error(func):
         try:
             return func(*args, **kwargs)
         except requests.ConnectionError:
-            # TODO: Error from the error class not hard coded.
             raise RestAPIConnectionError("Connection to Pygmy API Failed.")
     return _wrapped
 

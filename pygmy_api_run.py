@@ -8,8 +8,6 @@ from pygmy.core.initialize import initialize, initialize_test
 
 
 if __name__ == '__main__':
-
-    # TODO: Use argparsep
     if len(sys.argv) > 1 and sys.argv[1] == 'test':
         print('Running Pygmy API test server')
 

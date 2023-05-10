@@ -13,7 +13,6 @@ class ClickMeta(Model):
     __tablename__ = 'clickmeta'
 
     id = Column(Integer, primary_key=True, autoincrement=True)
-    # TODO AMIT: should be enum
     link_id = Column(Integer, ForeignKey('link.id'))
     link = relationship(
         'Link', back_populates='clickmeta', foreign_keys=[link_id])
@@ -50,31 +49,6 @@ class ClickMetaManager:
                                day="%m-%d",
                                month="%Y-%m-%d")
         return date_format_map.get(base)
-
-    @staticmethod
-    def psql_date_format(date_str):
-        psql_format = date_str
-        date_arg_map = {
-            '%Y': 'YYYY',
-            '%m': 'MM',
-            '%d': 'DD',
-            '%H': 'HH24',
-            '%M': 'MI',
-            '%S': 'SS'
-        }
-        for dt_arg, dt_val in date_arg_map.items():
-            psql_format = psql_format.replace(dt_arg, dt_val)
-        return psql_format
-
-    @staticmethod
-    def mysql_date_format(date_str):
-        psql_format = date_str
-        date_arg_map = {
-            '%M': '%i',
-        }
-        for dt_arg, dt_val in date_arg_map.items():
-            psql_format = psql_format.replace(dt_arg, dt_val)
-        return psql_format
 
     @property
     def past_30th_date(self):
@@ -223,14 +197,7 @@ class ClickMetaManager:
             return {}
         base = time_base(oldest_link_date)
         date_format = self._date_display_format(base)
-        if db.bind.name == 'postgresql':
-            date_format = self.psql_date_format(date_format)
-            date_part = "{}(created_at, '{}')".format(date_func, date_format)
-        elif db.bind.name == 'mysql':
-            date_format = self.mysql_date_format(date_format)
-            date_part = "{}(created_at, '{}')".format(date_func, date_format)
-        else:
-            date_part = "{}('{}', created_at)".format(date_func, date_format)
+        date_part = "{}('{}', created_at)".format(date_func, date_format)
         return dict(
             hits=self.link_hit_count(bind_param),
             country_hits=self.country_aggregate(bind_param),

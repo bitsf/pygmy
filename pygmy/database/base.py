@@ -16,17 +16,12 @@ class BaseDatabase:
         self._db_url = None
         self.store = None
 
-    def _prepare(self, url):
-        """Pre processing tasks for db."""
-        pass
-
     def commit(self):
         self.store.commit()
 
     def abort(self):
         self.store.rollback()
 
-    # TODO: Probs, should be done in config
     @property
     def db_url(self):
         """Gets the url from config file pygmy.cfg and then look up for
@@ -81,7 +76,6 @@ class BaseDatabase:
 
     def initialize(self, debug=False):
         log.info('DB URL: {}'.format(self.db_url))
-        self._prepare(self.db_url)
         self.engine = create_engine(self.db_url, echo=debug)
         session = sessionmaker(bind=self.engine)
         self.store = session()

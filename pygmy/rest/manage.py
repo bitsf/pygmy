@@ -7,7 +7,7 @@ from pygmy.config import config
 
 app = Flask(__name__)
 CORS(app)
-app.config['DEBUG'] = True
+app.config['DEBUG'] = False
 app.config.setdefault('JWT_ACCESS_TOKEN_EXPIRES', datetime.timedelta(minutes=1))
 app.config.setdefault('JWT_REFRESH_TOKEN_EXPIRES', datetime.timedelta(days=7))
 app.config.setdefault('JWT_HEADER_NAME', 'JWT_Authorization')

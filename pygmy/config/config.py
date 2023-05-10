@@ -7,8 +7,6 @@ _CONFIG_ENV_VAR = 'PYGMY_CONFIG_FILE'
 
 class Configuration:
     def __init__(self):
-        # default sqlite3
-        # TODO: Take this from cfg files
         self.default_config_path = 'pygmy/config/pygmy.cfg'
         self.cfg = None
         self.debug = False
@@ -27,10 +25,7 @@ class Configuration:
 
     def __getattr__(self, name):
         """Add sections dynamically. With this no need to define
-        each sections in initialize() method.
-
-        TODO: config.host should be accessed as config.rest['host'].
-        Remove initialize method."""
+        each sections in initialize() method."""
         if self.cfg is None:
             self._read_cfg()
         try:
@@ -41,7 +36,6 @@ class Configuration:
     def initialize(self):
         """Called from when the program is initialized and config
         path is loaded."""
-        # TODO: handle automatic assignment
         self._read_cfg()
         self.debug = (self.cfg['pygmy']['debug'] == 'True')
         self.database = dict(self.cfg['database'].items())

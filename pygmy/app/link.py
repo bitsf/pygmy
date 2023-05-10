@@ -62,7 +62,6 @@ def unshorten(short_url, secret_key=None,
     if query_by_code is True:
         query_dict = dict(short_code=short_path)
     else:
-        # TODO: remove this
         _id = HashDigest().decode(short_path)
         query_dict = dict(id=_id)
     link = url_manager.find(**query_dict)

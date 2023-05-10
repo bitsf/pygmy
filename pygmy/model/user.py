@@ -23,9 +23,6 @@ class User(Model):
 
 
 class UserManager:
-    # TODO 1: make an abstract class for managers
-    # TODO 2: A seperate directory for all ABC
-    # TODO 3: Make attr of Model accessible from manager class
     # Override __getattr__ and __setattr__
     def __init__(self, user=None):
         self.user = user

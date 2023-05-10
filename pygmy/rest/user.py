@@ -26,7 +26,6 @@ class UserApi(MethodView):
         return jsonify(result), 200
 
     def post(self):
-        # TODO: post should behave like upsert
         manager = UserManager()
         payload = request.get_json()
         try:
@@ -74,7 +73,6 @@ class Auth(MethodView):
 @APITokenAuth.token_required()
 def get_links(user_id=None):
     """Get all links that belong to user `user_id`"""
-    # TODO: get auth required from settings and get user links by id
 
     manager = LinkManager()
     schema = LinkSchema()
