@@ -28,7 +28,7 @@ def validate_url(url):
     is_valid = regex.match(url) is not None
     if is_valid:
         url = urlparse(url)
-        allowed_path = ['contact', 'about', 'shorten', 'dashboard']
+        allowed_path = ['about', 'shorten', 'dashboard']
         if url.netloc == 'pygy.co' and url.path.strip('/') in allowed_path:
             return is_valid
         elif url.netloc in filtered_urls and url.path.strip('/') not in allowed_path:

@@ -8,13 +8,12 @@ table { table-layout: fixed; }
     <table class="table table-bordered">
         <thead>
           <tr>
-            <th class="col-md-3">Long Link</th>
-            <th>Short Link</th>
-            <th>Created On</th>
-            <th><span title="Secret key">Secret Key</span></th>
-            <th><span title="Link expire status">Expired</span></th>
-            <th><span title="URL unique hits">Hits</span></th>
-            <th><span title="Click stats">Stats</span></th>
+            <th class="col-md-3">Ziel Link</th>
+            <th>Kurzlink</th>
+            <th>Erstellt am</th>
+            <th><span title="Link Status">Abgelaufen</span></th>
+            <th><span title="URL Aufrufe">Aufrufe</span></th>
+            <th><span title="Aktionen">Aktionen</span></th>
           </tr>
         </thead>
         <tbody>
@@ -23,14 +22,15 @@ table { table-layout: fixed; }
             <td>{{ link.long_url }}</td>
             <td><a href="/{{ link.short_code }}" target="_blank">{{ link.short_url }}</a></td>
             <td>{{ link.created_at }}</td>
-            <td>{{ link.secret_key|default:"--" }}</td>
             <td>{{ link.is_disabled }}</td>
             <td>{{ link.hits_counter }}</td>
-            <td><a href="/{{ link.short_code }}+">{{ link.short_code }}+</a></td>
+            <td>
+              <button onclick="location.href='/{{ link.short_code }}+'">Stats</a>
+            </td>
           </tr>
 {% endfor %}
         </tbody>
     </table>
 
-<a href="/" class="vcenter">Go Back</a>
+<a href="/" class="vcenter">Zurück</a>
 {% endblock content %}
