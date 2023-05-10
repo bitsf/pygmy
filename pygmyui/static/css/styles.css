@@ -120,6 +120,7 @@ nav {
 /* Navbar link colour*/
 .navbar .nav > li > a {
     color: white;
+    background-color: transparent;
 }
 
 .navbar .nav > li > a:hover,
