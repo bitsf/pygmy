@@ -206,3 +206,14 @@ def check_available(request):
     pygmy_client = pygmy_client_object(settings, request)
     is_available = pygmy_client.is_available(custom_code)
     return JsonResponse(dict(ok=is_available))
+
+
+def link_del(request):
+    link_id = request.GET.get('link_id')
+    if not link_id:
+        return JsonResponse(dict(ok=False))
+    pygmy_client = pygmy_client_object(settings, request)
+    pygmy_client.link_del(int(link_id))
+
+    return JsonResponse(dict(ok=True))
+    

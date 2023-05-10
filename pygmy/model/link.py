@@ -284,6 +284,9 @@ class LinkManager:
         return self.link
 
     @dbconnection
-    def remove(self, db, long_url):
-        """But why?"""
-        pass
+    def remove(self, db, link_id):
+        query = db.query(Link).filter(Link.id.is_(link_id)).delete(synchronize_session=False)
+        try:
+            db.commit()
+        except IntegrityError:
+            db.rollback()

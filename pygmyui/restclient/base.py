@@ -72,7 +72,7 @@ class Client:
         :param path: url_path
         :param data: Post data, None in case of GET
         :type data: json/dict
-        :param method: None or GET/POST
+        :param method: None or GET/POST/DELETE
         :type method: str
         :param return_for_status: Status codes which should be raised instead of
             being handled here, so that calling method can handle it in it's
@@ -94,12 +94,18 @@ class Client:
         _call = requests.get
         if method is None:
             method = 'GET' if data is None else 'POST'
-        if method.upper() == 'POST':
-            _call = requests.post
+
+        if method.upper() in ['POST', 'DELETE']:
+            if method.upper() == 'POST':
+                _call = requests.post
+            else:
+                _call = requests.delete
+
             if self.request_data_type == 'json':
                 request_param['json'] = data
             else:
                 request_param['data'] = data
+
         # Make rest call and handle the response
         response = _call(**request_param)
 

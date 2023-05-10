@@ -227,3 +227,18 @@ class PygmyApiClient(Client):
         if resp.get('short_code'):
             resp['short_url'] = self.makeurl(self.HOSTNAME, resp['short_code'])
         return resp
+
+    @catch_connection_error
+    def link_del(self, link_id):
+        url_path = '/api/links'
+        payload = dict(link_id=link_id)
+        r = self.call(url_path, data=payload, method='DELETE', return_for_status=400)
+        resp = r.json()
+        if int(r.status_code) == 401:
+            if resp['sub_status'] == 101:
+                self.refresh_access_token()
+                if self.header is None:
+                    raise UnAuthorized('Please login again to continue')
+                r = self.call(url_path, data=payload)
+                resp = r.json()
+        return resp

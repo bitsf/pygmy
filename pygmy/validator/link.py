@@ -71,3 +71,7 @@ class LinkSchema(Schema):
                 data['created_at'], '%Y-%m-%d %H:%M:%S'
             ).strftime('%d %b, %Y %H:%M:%S')
         return data
+
+
+class RemoveLinkSchema(Schema):
+    link_id = fields.Int(required=True)

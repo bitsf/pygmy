@@ -26,6 +26,7 @@ table { table-layout: fixed; }
             <td>{{ link.hits_counter }}</td>
             <td>
               <button onclick="location.href='/{{ link.short_code }}+'">Stats</a>
+              <button onclick="DeleteLink(this)" data-id="{{ link.id }}">Löschen</p>
             </td>
           </tr>
 {% endfor %}

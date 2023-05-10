@@ -79,3 +79,17 @@ function CheckLinkAvailability(){
         })
     }
 }
+
+function DeleteLink(el){
+    var id = el.dataset.id.split("/").pop();
+    
+    $.ajax({
+        type: "GET",
+        url: '/remove',
+        data: {link_id: id},
+        dataType: 'json',
+        success: function(responsedata){
+            window.location.reload();
+        }
+    })
+}
