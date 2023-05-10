@@ -10,8 +10,8 @@ from pygmy.utilities.utils import make_url_from_id
 
 VALID_INPUT_CHARS = string.ascii_letters + string.digits
 SECRET_KEY_ERROR = "Max allowed length for secret key is between 1-8"
-INVALID_CUSTOM_CODE_ERROR = "Invalid input. Length should be <= 8 and should" \
-                            " be a valid alphabat, digit or a mix of both"
+INVALID_CUSTOM_CODE_ERROR = "Ungültige Eingabe, URL sollte unter 8 Zeichen lang sein" \
+                            " und darf nur alphanumerische Zeichen oder Zahlen enthalten"
 MAX_SHORT_CODE_LEN = 8
 
 

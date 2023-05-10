@@ -32,8 +32,8 @@
       <td>{{ link.is_disabled }}</td>
       <td>{{ link.hits_counter }}</td>
       <td>
-        <button onclick="location.href='/{{ link.short_code }}+'">Stats</a>
-          <button onclick="DeleteLink(this)" data-id="{{ link.id }}">Löschen</p>
+        <button onclick="location.href='/{{ link.short_code }}+'" class="stat-button">Stats</button>
+        <button onclick="DeleteLink(this)" data-id="{{ link.id }}" class="stat-button">Löschen</button>
       </td>
     </tr>
     {% endfor %}
