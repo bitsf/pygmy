@@ -2,36 +2,43 @@
 
 {% block content %}
 <style>
-table { table-layout: fixed; }
- table th, table td { overflow: hidden; word-wrap:break-word}
+  table {
+    table-layout: fixed;
+  }
+
+  table th,
+  table td {
+    overflow: hidden;
+    word-wrap: break-word
+  }
 </style>
-    <table class="table table-bordered">
-        <thead>
-          <tr>
-            <th class="col-md-3">Ziel Link</th>
-            <th>Kurzlink</th>
-            <th>Erstellt am</th>
-            <th><span title="Link Status">Abgelaufen</span></th>
-            <th><span title="URL Aufrufe">Aufrufe</span></th>
-            <th><span title="Aktionen">Aktionen</span></th>
-          </tr>
-        </thead>
-        <tbody>
-{% for link in links %}
-          <tr>
-            <td>{{ link.long_url }}</td>
-            <td><a href="/{{ link.short_code }}" target="_blank">{{ link.short_url }}</a></td>
-            <td>{{ link.created_at }}</td>
-            <td>{{ link.is_disabled }}</td>
-            <td>{{ link.hits_counter }}</td>
-            <td>
-              <button onclick="location.href='/{{ link.short_code }}+'">Stats</a>
-              <button onclick="DeleteLink(this)" data-id="{{ link.id }}">Löschen</p>
-            </td>
-          </tr>
-{% endfor %}
-        </tbody>
-    </table>
+<table class="table table-bordered">
+  <thead>
+    <tr>
+      <th class="col-md-3">Ziel Link</th>
+      <th>Kurzlink</th>
+      <th>Erstellt am</th>
+      <th><span title="Link Status">Abgelaufen</span></th>
+      <th><span title="URL Aufrufe">Aufrufe</span></th>
+      <th><span title="Aktionen">Aktionen</span></th>
+    </tr>
+  </thead>
+  <tbody>
+    {% for link in links %}
+    <tr>
+      <td>{{ link.long_url }}</td>
+      <td><a href="/{{ link.short_code }}" target="_blank">{{ link.short_url }}</a></td>
+      <td>{{ link.created_at }}</td>
+      <td>{{ link.is_disabled }}</td>
+      <td>{{ link.hits_counter }}</td>
+      <td>
+        <button onclick="location.href='/{{ link.short_code }}+'">Stats</a>
+          <button onclick="DeleteLink(this)" data-id="{{ link.id }}">Löschen</p>
+      </td>
+    </tr>
+    {% endfor %}
+  </tbody>
+</table>
 
 <a href="/" class="vcenter">Zurück</a>
 {% endblock content %}
