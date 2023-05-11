@@ -11,7 +11,6 @@ $(document).ready(function(){
             type: "POST",
             url: window.location.pathname,
             dataType: 'json',
-            headers: {'X-CSRFToken': '{{ csrf_token }}'},
             data: JSON.stringify({
                 code: window.location.search.split('=')[1],
                 secret_key: secret_key,
