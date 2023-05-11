@@ -3,7 +3,7 @@ version: '3'
 services:
 
   pygmy:
-    image: amit19/pygmy
+    image: pygmy
     restart: always
     build: .
     # ports:
@@ -13,7 +13,7 @@ services:
     command: gunicorn --log-file /var/log/pygmy/error_logs.log --access-logfile /var/log/pygmy/acclogs.log --log-level DEBUG --bind 0.0.0.0:9119 pygmy.rest.wsgi:app
 
   pygmyui:
-    image: amit19/pygmy
+    image: pygmyui
     restart: always
     build: .
     ports:
