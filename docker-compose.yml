@@ -10,7 +10,7 @@ services:
     #  - "9119:9119"
     volumes:
      - .:/pygmy
-    command: gunicorn --log-file /var/log/pygmy/error_logs.log --access-logfile /var/log/pygmy/acclogs.log --log-level DEBUG --bind 0.0.0.0:9119 --workers 2 pygmy.rest.wsgi:app
+    command: gunicorn --log-file /var/log/pygmy/error_logs.log --access-logfile /var/log/pygmy/acclogs.log --log-level DEBUG --bind 0.0.0.0:9119 pygmy.rest.wsgi:app
 
   pygmyui:
     image: amit19/pygmy
@@ -22,7 +22,7 @@ services:
       - pygmy
     environment:
       - PYGMY_API_ADDRESS=pygmy
-    command: sh -c "cd pygmyui && gunicorn --log-file /var/log/pygmy/uierror_logs.log --access-logfile /var/log/pygmy/uiacclogs.log --bind 0.0.0.0:8000 --workers 2 pygmyui.wsgi && cd .."
+    command: sh -c "cd pygmyui && gunicorn --log-file /var/log/pygmy/uierror_logs.log --access-logfile /var/log/pygmy/uiacclogs.log --bind 0.0.0.0:8000 pygmyui.wsgi && cd .."
     depends_on:
       - pygmy
 
