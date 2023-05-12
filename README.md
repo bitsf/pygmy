@@ -1,20 +1,9 @@
-<p align="center"><img src="pygmyui/static/logo/logov2.png" alt="pygmy" height="200px"></p>
+<p align="center"><img src="pygmyui/static/logo/logov2.png" alt="herme.li" height="200px"></p>
 
 <div align="center">
-  <h1>herme.li</h1>
+  <h1>Herme.li</h1>
 
-<!-- [![Build Status](https://travis-ci.org/amitt001/pygmy.svg?branch=master)](https://travis-ci.org/amitt001/pygmy) -->
-
-[![Coverage Status](https://img.shields.io/coveralls/github/amitt001/pygmy.svg?color=yellowgreen)](https://coveralls.io/github/amitt001/pygmy?branch=master)
-![PyPI - Python Version](https://img.shields.io/pypi/pyversions/Django.svg)
-[![PyPI license](https://img.shields.io/pypi/l/ansicolortags.svg)](https://github.com/amitt001/pygmy/blob/master/LICENSE)
-![Docker Pulls](https://img.shields.io/docker/pulls/amit19/pygmy.svg)
-
-Demo Version: [https://demo.pygy.co](https://demo.pygy.co)
-
-Link stats(add **+** to the URL) example: [demo.pygy.co/pygmy+](https://demo.pygy.co/pygmy+)
-
-Hackernews Thread: https://news.ycombinator.com/item?id=17690559
+Web: [https://herme.li](https://herme.li)
 </div>
 
 # Table of Contents
@@ -22,22 +11,25 @@ Hackernews Thread: https://news.ycombinator.com/item?id=17690559
 - [Features](#features)
 - [Technical Info](#technical-info)
 - [Setup](#setup)
+  - [Clone](#clone-the-repository)
   - [Docker](#docker)
-  - [Manual(from source)](#manualfrom-source)
-  - [DB Setup:](#db-setup)
-    - [Use MySQL](#use-mysql)
-    - [Use Postgresql](#use-postgresql)
-    - [Use SQLite](#use-sqlite)
-  - [Docker](#docker-1)
+  - [Manual](#manual)
+  - [DB Setup](#db-setup)
   - [Using Pygmy API](#using-pygmy-api)
     - [Create User](#create-user)
   - [Shell Usage](#shell-usage)
 - [Development](#development)
+- [Deployment](#deployment)
+  - [Deploying changes](#deploying-changes)
   - [Run tests:](#run-tests)
       - [Run tests with coverage report](#run-tests-with-coverage-report)
 - [License](#license)
 
-Pygmy or `pygy.co` is an open-source, extensible & easy-to-use but powerful URL shortener. It's created keeping in mind that it should be easy to host and run your custom URL shortener without much effort. [Open-source Python URL shortener]
+Herme.li is a fork of the open-source URL-shortener web-app Pygmy by [amitt001](https://github.com/amitt001/).
+
+It has been customized and extended to match our company internal needs by [raphael-s](https://github.com/raphael-s).
+
+Pygmy or is an open-source, extensible & easy-to-use but powerful URL shortener. It's created keeping in mind that it should be easy to host and run your custom URL shortener without much effort. [Open-source Python URL shortener]
 
 The architecture is very loosely coupled which allows custom integrations easily.
 
@@ -50,225 +42,103 @@ The architecture is very loosely coupled which allows custom integrations easily
 # Features
 
 - URL shortener
-- Customized short URL's(ex: `pygy.co/pygmy`)
-- Support to create auto expiry URL after some time.
-- Secret key protected URL's
+- Customized short URL's
 - User Login to track shortened URL's and link stats
 - User dashboard
-- Link Analytics(add + to the tiny URL to get link stats)
+- Link Analytics
 
 # Technical Info
 
 - Python 3, Javascript, JQuery, HTML, CSS
 - REST API: Flask
-- Pygmyui: Django(It serves the web user-interface)
-- Supported DBs: PostgreSQL/MySQL/SQLite
-- Others: SQLAlchmey, JWT
+- Pygmyui: Django
+- DB: SQLite
 - Docker
-- Docker-compose
 
 # Setup
 
+Since we customized the web-app to match our own demands, using the official Docker image is no longer viable.
+
+## Clone the repository
+
+1. Clone this repository to your local machine `git clone git@github.com:Herrmann-AG/herme-li.git`
+2. Open the new folder `cd herme-li`
+
 ## Docker
 
-1. In terminal run this command: `docker pull amit19/pygmy`
-2. Then run the container: `docker run -it -p 8000:8000 amit19/pygmy`
-3. Open http://localhost:8000 in your browser
+To run the app locally using Docker, you just have to build the images and then start the containers.
 
-## Manual(from source)
+1. In terminal run this command: `docker compose up -d --build`
+3. Open http://localhost:10101 in your browser
 
-1. Clone `git clone https://github.com/amitt001/pygmy.git & cd pygmy`
-2. (Optional) Install virtualenv (optional but recommended)
-    - `virtualenv -p python3 env`
-    - `source env/bin/activate`
-3. Install dependencies: `pip3 install -r requirements.txt` (if you are using MySQL or PostgreSQL check [DB setup](#db-setup) section)
-4. `python run.py` (It runs Flask and Django servers using gunicorn)
+## Manual
+
+1. Create a new Python virtualenv and activate it
+    - `python -m venv .`
+    - `source ./bin/activate`
+2. Install dependencies: `pip install -r requirements.txt`
+4. `python run.py`
 5. Visit `127.0.0.1:8000` to use the app
 6. Logs can be viewed at `pygmy/data/pygmy.log`
 
 Note:
 
- - **This module only supports Python 3. Make sure pip and virtualenv are both python 3 based versions.**(To install Python 3 on Mac: http://docs.python-guide.org/en/latest/starting/install3/osx/)
+ - **This module only supports Python up to version 3.9. Make sure pip and virtualenv are both python 3 based versions.**
  - The project has two config files:
     - pygmy.cfg: `pygmy/config/pygmy.cfg` rest API and pygmy core settings file
     - settings.py: `pygmyui/pygmyui/settings.py` Django settings file
- - SQLite is default DB, if you are using PostgreSQL or MySQL with this project, make sure they are installed into the system.
- - You can run pygmy shell also. Present in the root directory. To run the program on the terminal: `python shell`
- - By default, DEBUG is set to True in `pygmyui/pygmyui/settings.py` file, set it to False in production.
+ - You can run pygmy shell also. Present in the root directory. To run the program on the terminal: `python shell.py`
+ - By default, DEBUG is set to False in `pygmyui/pygmyui/settings.py` file, set it to True if you have to make changes to the code.
 
 ## DB Setup:
 
-By default, Pygmy uses SQLite but any of the DB, SQLite, MySQL or PostgreSQL, can be used. Configs is present at `pygmy/config/pygmy.cfg`.
-
-Use DB specific instruction below. Make sure to check and modify values in pygmy.cfg file according to your DB setup.
-
-### Use MySQL
-
-1. Install pymysql: `pip install pymysql`
-
-2. Check correct port: `mysqladmin variables | grep port`
-
-3. Change below line in `pygmy/core/pygmy.cfg` file:
-
-```
-[database]
-engine: mysql
-url: {engine}://{user}:{password}@{host}:{port}/{db_name}
-user: root
-password: root
-host: 127.0.0.1
-port: 3306
-db_name: pygmy
-```
-
-4. Enter MySQL URL `CREATE DATABASE pygmy;`
-
-Note: It's better to use Mysql with version > `5.6.5` to use the default value of `CURRENT_TIMESTAMP` for `DATETIME`.
-
-### Use Postgresql
-
-1. Change below line in `pygmy/core/pygmy.cfg` file:
-
-```
-[database]
-engine: postgresql
-url: {engine}://{user}:{password}@{host}:{port}/{db_name}
-user: root
-password: root
-host: 127.0.0.1
-port: 5432
-db_name: pygmy
-```
-
-### Use SQLite
-
-> SQLite is natively supported in Python
-
-1. Update `sqlite:////var/lib/pygmy/pygmy.db` file
-
-```
-[database]
-engine: sqlite3
-sqlite_data_dir: data
-sqlite_db_file_name: pygmy.db
-```
-
-## Docker
-
-Docker image name: `amit19/pygmy`. Docker image can be built by running `docker build -t amit19/pygmy .` command. Both the Dockerfile and docker-compose file are present at the root of the project. To use docker-compose you need to pass DB credentials in the docker-compose file.
+The original Pygmy had options to use MySQL, or Postgres. We simply use SQLite since it is the easiest version to deploy and manage on our production server.
 
 ## Using Pygmy API
 
 ### Create User
 
     curl -XPOST http://127.0.0.1:9119/api/user/1 -H 'Content-Type: application/json' -d '{
-    "email": "amit@gmail.com",
-    "f_name": "Amit",
-    "l_name": "Tripathi",
-    "password": "a_safe_one"
+    "email": "test@wochen-zeitung.ch",
+    "f_name": "Test",
+    "l_name": "WZ",
+    "password": "huere_sicher"
     }'
 
-## Shell Usage
+Q. How  are link stats generated?
+> For getting geo location stats from IP, maxminds GeoLite2-Country.mmd database is used. It's in the `pygmy/app` directory.
 
-Open shell using ./shell. Available context in shell are: pygmy, Config, DB, etc. See all context by using pygmy_context.
-
-Shorten a link:
-
-```
-In [1]: shorten('http://iamit.xyz')
-Out[1]:
-{'created_at': '15 Nov, 2017 17:33:42',
- 'description': None,
- 'expire_after': None,
- 'hits_counter': 0,
- 'id': 'http://0.0.0.0:9119/api/link/5',
- 'is_custom': False,
- 'is_disabled': False,
- 'is_protected': False,
- 'long_url': 'http://iamit.xyz',
- 'owner': None,
- 'secret_key': '',
- 'short_code': 'f',
- 'short_url': 'http://pygy.co/f',
- 'updated_at': '2017-11-15T17:33:42.772520+00:00'}
-
-In [2]: shorten('http://iamit.xyz', request=1)
-Out[2]: <pygmy.model.link.Link at 0x105ca1b70>
-
-In [3]: unshorten('f')
-Out[3]:
-{'created_at': '15 Nov, 2017 17:33:42',
- 'description': None,
- 'expire_after': None,
- 'hits_counter': 0,
- 'id': 'http://0.0.0.0:9119/api/link/5',
- 'is_custom': False,
- 'is_disabled': False,
- 'is_protected': False,
- 'long_url': 'http://iamit.xyz',
- 'owner': None,
- 'secret_key': '',
- 'short_code': 'f',
- 'short_url': 'http://pygy.co/f',
- 'updated_at': '2017-11-15T17:33:42.772520+00:00'}
-
-In [4]: link_stats('f')
-Out[4]:
-{'country_stats': 0,
- 'created_at': datetime.datetime(2017, 11, 15, 17, 33, 42, 772520),
- 'long_url': 'http://iamit.xyz',
- 'referrer': 0,
- 'short_code': 'f',
- 'time_series_base': None,
- 'time_stats': 0,
- 'total_hits': 0}
-
-In [5]: # check the available context of the shell
-In [6]: pygmy_context
-
-In [7]: # Create custom short URL
-
-In [8]: shorten('http://iamit.xyz', short_code='amit')
-Out[8]:
-{'long_url': 'http://iamit.xyz',
- 'short_code': 'amit',
- 'short_url': 'http://pygy.co/amit'}
-
-In [9]: shorten?
-Signature: shorten(long_url, short_code=None, expire_after=None, description=None, secret_key=None, owner=None, request=None)
-Docstring:
-    Helper class that has been delegated the task of inserting the
-    passed url in DB, base 62 encoding from DB id and return the short
-    URL value.
-```
-
-Q. How Link Stats Are Generated?
-> For getting geo location stats from IP maxminds' [GeoLite2-Country.mmd](http://demo.pygy.co/cm) database is used. It's in `pygmy/app` directory.
-
-Q. How Pygmy Auth Token Works?
-> It uses JWT. When user logs in using username and password two tokens are generated, refresh token and auth token. Auth token is used for authentication with the Pygmy API. The refresh token can only be used to generate a new auth token. Auth token has a very short TTL but refresh token has a longer TTL. After 30 minutes. When a request comes with the old auth token and a new token is generated from the refresh token API. User passwords are encrypted by [bcrypt](https://en.wikipedia.org/wiki/Bcrypt) hash algorithm.
+Q. How does the pygmy auth token work?
+> It uses JWT. When user logs in using username and password two tokens are generated, refresh token and auth token. Auth token is used for authentication with the Pygmy API. The refresh token can only be used to generate a new auth token. Auth token has a very short TTL but refresh token has a longer TTL. After 30 minutes. When a request comes with the old auth token, a new token is generated from the refresh token API. User passwords are encrypted by [bcrypt](https://en.wikipedia.org/wiki/Bcrypt) hash algorithm.
 
 # Development
 
-If you find any bug, have a question or a general feature request. Open an issue on the 'Issue' page.
+To contribute:
 
-To contribute to the project:
+1. Follow the steps described in [Setup](#manual)
+2. Make your changes to the code
+3. Commit your changes to a new branch
+4. Push the changes to the Github repository
+5. Open a pull request and assign somebody to review your changes
 
-1. Clone the repo and make changes
-2. Build the code: `docker build pygmy`
-3. Test the changer by running: `docker run -it -p 8000:8000 pygmy`
-4. The website will be available at http://127.0.0.1:8000/
+# Deployment
+
+Herme.li is deployed using Docker on our VPS server Wachthubel, hosted at Hostfactory.
+
+## Deploying changes
+
+If there were changes made to the app, follow these steps to apply them to the production deployment:
+
+1. Connect to the Wachthubel VPS (check Hostfactory for access Data) via SSH
+2. Change into the herme-li directory `cd /var/www/vhosts/herme-li`
+3. Make sure the ssh-agent is running (`eval $(ssh-agent)`) and the SSH key is present (`ssh-add ~/.ssh/id_github`)
+4. Pull your changes from the Github repo `git pull`
+5. Update, rebuild and recreate the Docker container `docker compose up -d --build`
+6. That's it, make sure the site is running as expected!
 
 ## Run tests:
 
-1. Install pytest (if not already installed): `pip install pytest`
-2. In root directory run command: `py.test`
-
-#### Run tests with coverage report
-
-1. Install coverage `pip install coverage`
-2. Run command: `coverage run --omit="*/templates*,*/venv*,*/tests*" -m py.test`
-3. See coverage report(Coverage numbers are low as the coverage for integration tests is not generated): `coverage report`
+Tests no longer work due to the changes we had to make to pygmy.
 
 # License
 
