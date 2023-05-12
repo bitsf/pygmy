@@ -1,5 +1,6 @@
 from pygmy.core.hashdigest import HashDigest
 from pygmy.model import LinkManager
+from random import randint
 
 
 def next_short_code():
@@ -9,16 +10,12 @@ def next_short_code():
     """
     link_manager = LinkManager()
     link = link_manager.latest_default_link()
-    # First link
-    if link is None:
-        base_id = 1
+    # set base id to random int for a 5 digit hash code
+    base_id = randint(14776336, 916132831)
+    base_str = HashDigest().shorten(base_id)
+    while link_manager.find(short_code=base_str):
+        base_id += 1
         base_str = HashDigest().shorten(base_id)
-    else:
-        base_id = HashDigest().decode(link.short_code) + 1
-        base_str = HashDigest().shorten(base_id)
-        while link_manager.find(short_code=base_str):
-            base_id += 1
-            base_str = HashDigest().shorten(base_id)
     return base_str
 
 
