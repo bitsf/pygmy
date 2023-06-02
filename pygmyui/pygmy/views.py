@@ -77,7 +77,8 @@ def link_shortener(request):
 def get_short_link(request, code):
     if request.method == 'GET':
         try:
-            schema = 'https://' if request.is_secure() else 'http://'
+            # schema = 'https://' if request.is_secure() else 'http://'
+            schema = request.scheme + '://'
             url_obj = {}
             url_obj['short_url'] = (
                 schema + request.META['HTTP_HOST'] + '/' + url_obj.get(
