@@ -14,3 +14,6 @@ class LinkInvalid(PygmyExcpetion):
 class ShortURLUnavailable(PygmyExcpetion):
     """Raised when a short url already exists and a new insert comes with same
     short url."""
+
+class QrCodeGenerationFailed(PygmyExcpetion):
+    """Raised when the generation of the Qr-code has failed."""
