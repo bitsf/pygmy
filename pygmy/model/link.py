@@ -1,7 +1,7 @@
 import time
 import binascii
 import datetime
-import base64
+from base64 import b64encode
 from io import BytesIO
 import qrcode
 
@@ -15,6 +15,7 @@ from urllib.parse import urlparse
 from pygmy.database.base import Model
 from pygmy.database.dbutil import dbconnection, utcnow
 from pygmy.exception.error import ShortURLUnavailable
+from pygmy.exception.error import QrCodeGenerationFailed
 from pygmy.model.clickmeta import ClickMeta
 
 
@@ -74,9 +75,9 @@ class Link(Model):
         if not target.qr_code:
             # Generate qr code
             qr = qrcode.QRCode(
-                version=10,
+                version=None,
                 error_correction=qrcode.constants.ERROR_CORRECT_M,
-                box_size=10,
+                box_size=20,
                 border=4,
             )
             qr.add_data("https://herme.li/" + shorted)
@@ -87,13 +88,18 @@ class Link(Model):
             img.save(img_byte_arr, format='PNG')
             img_byte_arr = img_byte_arr.getvalue()
             # Convert bytes to base64
-            qr_code = base64.b64encode(img_byte_arr)
-            connection.execute(
-                table.update().where(
-                    table.c.id == target.id).values(
-                    qr_code=qr_code
+            qr = b64encode(img_byte_arr)
+            qr_code=str(qr)
+            qr_code = qr_code.split("'")[1]
+            try:
+                connection.execute(
+                    table.update().where(
+                        table.c.id == target.id).values(
+                        qr_code=qr_code
+                    )
                 )
-            )
+            except IntegrityError:
+                raise QrCodeGenerationFailed('The Qr-code couldnt be generated')
 
     @staticmethod
     def do_after_insert(_, connection, target):
