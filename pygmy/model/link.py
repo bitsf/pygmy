@@ -103,7 +103,7 @@ class Link(Model):
     @staticmethod
     def do_after_insert(_, connection, target):
         shorted = Link.generate_short_code(_, connection, target)
-        # Link.generate_base64_qr_code(_, connection, target, shorted)
+        Link.generate_base64_qr_code(_, connection, target, shorted)
 
 event.listen(Link, 'after_insert', Link.do_after_insert)
 
