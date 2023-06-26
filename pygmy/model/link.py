@@ -1,17 +1,20 @@
 import time
 import binascii
 import datetime
+from base64 import b64encode
+from io import BytesIO
+import qrcode
 
 from sqlalchemy import event, and_, or_, DDL
 from sqlalchemy.exc import IntegrityError
 from sqlalchemy.orm import relationship
 from sqlalchemy import (Column, String, Integer, Boolean,
-                        BigInteger, Unicode, DateTime)
+                        BigInteger, Unicode, DateTime, VARCHAR)
 from urllib.parse import urlparse
 
 from pygmy.database.base import Model
 from pygmy.database.dbutil import dbconnection, utcnow
-from pygmy.exception.error import ShortURLUnavailable
+from pygmy.exception.error import ShortURLUnavailable, QrCodeGenerationFailed
 from pygmy.model.clickmeta import ClickMeta
 
 
@@ -26,6 +29,7 @@ class Link(Model):
     domain = Column(String(300), )
     long_url_hash = Column(BigInteger, index=True)
     short_code = Column(Unicode(6), unique=True, index=True, default=None)
+    qr_code = Column(VARCHAR(), default=None)
     description = Column(String(1000), default=None)
     owner = Column(Integer, default=None)
     clickmeta = relationship(
@@ -62,9 +66,46 @@ class Link(Model):
                     is_default=is_default
                 )
             )
+            return short_code
+ 
+    @staticmethod
+    def generate_base64_qr_code(_, connection, target, shorted):
+        table = Link.__table__
+        if not target.qr_code:
+            # Generate qr code
+            qr = qrcode.QRCode(
+                version=None,
+                error_correction=qrcode.constants.ERROR_CORRECT_M,
+                box_size=20,
+                border=4,
+            )
+            qr.add_data("https://herme.li/" + shorted)
+            qr.make(fit=True)
+            img = qr.make_image(fill_color="black", back_color="white")
+            # Convert PIL image to bytes
+            img_byte_arr = BytesIO()
+            img.save(img_byte_arr, format='PNG')
+            img_byte_arr = img_byte_arr.getvalue()
+            # Convert bytes to base64
+            qr = b64encode(img_byte_arr)
+            qr_code=str(qr)
+            qr_code = qr_code.split("'")[1]
+            try:
+                connection.execute(
+                    table.update().where(
+                        table.c.id == target.id).values(
+                        qr_code=qr_code
+                    )
+                )
+            except IntegrityError:
+                raise QrCodeGenerationFailed('The Qr-code couldnt be generated')
 
+    @staticmethod
+    def do_after_insert(_, connection, target):
+        shorted = Link.generate_short_code(_, connection, target)
+        Link.generate_base64_qr_code(_, connection, target, shorted)
 
-event.listen(Link, 'after_insert', Link.generate_short_code)
+event.listen(Link, 'after_insert', Link.do_after_insert)
 
 # adding event to modify field `short_code` when using mysql
 event.listen(

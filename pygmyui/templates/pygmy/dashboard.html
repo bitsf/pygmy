@@ -18,7 +18,7 @@
       <th class="col-md-3">Ziel Link</th>
       <th>Kurzlink</th>
       <th>Erstellt am</th>
-      <th><span title="URL Aufrufe">Aufrufe</span></th>
+      <th class="col-md-1"><span title="URL Aufrufe">Aufrufe</span></th>
       <th><span title="Aktionen">Aktionen</span></th>
     </tr>
   </thead>
@@ -30,6 +30,7 @@
       <td>{{ link.created_at }}</td>
       <td>{{ link.hits_counter }}</td>
       <td>
+        <a download="qr-code-{{ link.short_code }}" href="data:image/png;base64,{{ link.qr_code }}" class="stat-button">QR-Code</a>
         <button onclick="location.href='/{{ link.short_code }}+'" class="stat-button">Stats</button>
         <button onclick="DeleteLink(this)" data-id="{{ link.id }}" class="stat-button">Löschen</button>
       </td>
