@@ -49,7 +49,7 @@ The architecture is very loosely coupled which allows custom integrations easily
 
 # Technical Info
 
-- Python 3, Javascript, JQuery, HTML, CSS
+- Python 3.9, Javascript, JQuery, HTML, CSS
 - REST API: Flask
 - Pygmyui: Django
 - DB: SQLite
