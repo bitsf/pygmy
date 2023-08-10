@@ -67,6 +67,8 @@ class Link(Model):
                 )
             )
             return short_code
+        else:
+            return target.short_code
  
     @staticmethod
     def generate_base64_qr_code(_, connection, target, shorted):
