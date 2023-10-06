@@ -81,15 +81,21 @@ function CheckLinkAvailability(){
 }
 
 function DeleteLink(el){
-    var id = el.dataset.id.split("/").pop();
-    
-    $.ajax({
-        type: "GET",
-        url: '/remove',
-        data: {link_id: id},
-        dataType: 'json',
-        success: function(responsedata){
-            window.location.reload();
-        }
-    })
-}
+    // Confirmation dialog before deleting link
+    const confirmResponse = confirm('Are you sure you want to delete the link?');
+
+    // Delete link if user confirmed
+    if (confirmResponse) {
+        var id = el.dataset.id.split("/").pop();
+        
+        $.ajax({
+            type: "GET",
+            url: '/remove',
+            data: {link_id: id},
+            dataType: 'json',
+            success: function(responsedata){
+                window.location.reload();
+            }
+        })
+    };
+};
