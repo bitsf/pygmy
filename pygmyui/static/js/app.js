@@ -97,6 +97,5 @@ function DeleteLink(el){
                 window.location.reload();
             }
         })
-        alert("link deleted!");
     };
 };
