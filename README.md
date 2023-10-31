@@ -44,6 +44,7 @@ The architecture is very loosely coupled which allows custom integrations easily
 - URL shortener
 - Customized short URL's
 - User Login to track shortened URL's and link stats
+- Automatic QR code generation as SVG image
 - User dashboard
 - Link Analytics
 

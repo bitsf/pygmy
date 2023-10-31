@@ -2,8 +2,8 @@ import time
 import binascii
 import datetime
 from base64 import b64encode
-from io import BytesIO
 import qrcode
+from qrcode.image.svg import SvgImage
 
 from sqlalchemy import event, and_, or_, DDL
 from sqlalchemy.exc import IntegrityError
@@ -77,26 +77,23 @@ class Link(Model):
             # Generate qr code
             qr = qrcode.QRCode(
                 version=None,
-                error_correction=qrcode.constants.ERROR_CORRECT_M,
                 box_size=20,
-                border=4,
+                border=1,
+                image_factory=SvgImage
             )
             qr.add_data("https://herme.li/" + shorted)
             qr.make(fit=True)
-            img = qr.make_image(fill_color="black", back_color="white")
-            # Convert PIL image to bytes
-            img_byte_arr = BytesIO()
-            img.save(img_byte_arr, format='PNG')
-            img_byte_arr = img_byte_arr.getvalue()
-            # Convert bytes to base64
-            qr = b64encode(img_byte_arr)
-            qr_code=str(qr)
-            qr_code = qr_code.split("'")[1]
+            img = qr.make_image(fill_color="black")
+
+            # Convert bytes to base64 string
+            qr_string = str(b64encode(img.to_string())).split("'")[1]
+
+            # Save b64 string to db
             try:
                 connection.execute(
                     table.update().where(
                         table.c.id == target.id).values(
-                        qr_code=qr_code
+                        qr_code=qr_string
                     )
                 )
             except IntegrityError:
