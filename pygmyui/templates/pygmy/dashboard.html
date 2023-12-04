@@ -32,7 +32,7 @@
       <td>
         <a download="qr-code-{{ link.short_code }}" href="data:image/svg+xml;base64,{{ link.qr_code }}" class="stat-button">QR-Code</a>
         <button onclick="location.href='/{{ link.short_code }}+'" class="stat-button">Stats</button>
-        <button onclick="DeleteLink(this)" data-id="{{ link.id }}" class="stat-button">Löschen</button>
+        <button onclick="DeleteLink(this)" data-id="{{ link.id }}" class="stat-button">Delete</button>
       </td>
     </tr>
     {% endfor %}

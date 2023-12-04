@@ -30,7 +30,7 @@ def generateQrCode(shorted):
             border=1,
             image_factory=SvgImage
         )
-    qr.add_data("https://herme.li/" + shorted)
+    qr.add_data(shorted)
     qr.make(fit=True)
     img = qr.make_image(fill_color="black")
 

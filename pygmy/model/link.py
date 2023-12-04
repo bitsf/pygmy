@@ -54,21 +54,7 @@ class Link(Model):
         is_default = True
         if target.is_protected or target.is_custom or target.expire_after:
             is_default = False
-        # to resolve cyclic import
-        from pygmy.helpers.link_helper import next_short_code
-        table = Link.__table__
-        if not target.short_code:
-            short_code = next_short_code()
-            connection.execute(
-                table.update().where(
-                    table.c.id == target.id).values(
-                    short_code=short_code,
-                    is_default=is_default
-                )
-            )
-            return short_code
-        else:
-            return target.short_code
+        return target.short_url
  
     @staticmethod
     def generate_base64_qr_code(_, connection, target, shorted):
@@ -81,7 +67,7 @@ class Link(Model):
                 border=1,
                 image_factory=SvgImage
             )
-            qr.add_data("https://herme.li/" + shorted)
+            qr.add_data(shorted)
             qr.make(fit=True)
             img = qr.make_image(fill_color="black")
 
