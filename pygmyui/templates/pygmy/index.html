@@ -2,7 +2,7 @@
 
 {% block content %}
 <div class="vcenter">
-    <h1>Herme.li</h1>
+    <h1>Pygmy</h1>
 </div>
 <div>
     {% if request.COOKIES.refresh_token %}
@@ -54,11 +54,10 @@
                     <div class="col-xs-0">
                         <input type="checkbox" tabindex="3" name="remember_check" id="expire"
                             onclick="readOnlyToggle('expireTime')">
-                        <label for="expire"> Ablaufdatum </label>
+                        <label for="expire"> Expire </label>
                     </div>
                     <div class="col-md-2">
-                        <input class="form-control input-sm" name="remember_time" id="expireTime"
-                            placeholder="Ablaufzeit in Minuten" readonly>
+                        <input class="form-control input-sm" name="remember_time" id="expireTime" placeholder="Expire time in minutes." readonly>
                     </div>
                 </div><br>
 
@@ -76,15 +75,15 @@
                     value="" autocomplete="off">
             </div>
             <div class="form-group">
-                <label for="password">Passwort</label>
+                <label for="password">Password</label>
                 <input type="password" name="password" id="login_password" tabindex="2" class="form-control"
-                    placeholder="Passwort" autocomplete="off">
+                    placeholder="Password" autocomplete="off">
             </div>
             <div class="form-group">
                 <div class="row" style="display: inline-block;">
                     <div class="col-xs-5" style="width: 15em;">
                         <input type="submit" name="login-submit" id="login-submit" tabindex="4"
-                            class="form-control btn btn-success" value="Anmelden">
+                            class="form-control btn btn-success" value="Submit">
                     </div>
                 </div>
             </div>
