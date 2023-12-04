@@ -54,16 +54,16 @@ class Auth(MethodView):
         email = params.get('email')
         password = params.get('password')
         if not email:
-            return jsonify(dict(error="Email muss angegeben werden.")), 400
+            return jsonify(dict(error="Missing email required.")), 400
         if not password:
-            return jsonify(dict(error="Passwort muss angegeben werden.")), 400
+            return jsonify(dict(error="Missing password required.")), 400
 
         user = UserManager().find(email=email)
         if user is None:
             return jsonify(dict(
-                error='Kein Benutzer gefunden mit folgender Email: {}'.format(email))), 404
+                error='No user found with email: {}'.format(email))), 404
         if email != user.email or not bcrypt.verify(password, user.password):
-            return jsonify(dict(error="Ungültige Email oder Passwort.")), 400
+            return jsonify(dict(error="Invalid username or password.")), 400
         result = self.schema.dump(user)
         tokens = TokenAuth().create_token(identity=email)
         result.update(tokens)
@@ -79,10 +79,10 @@ def get_links(user_id=None):
     if request.method == 'GET':
         user_email = APITokenAuth.get_jwt_identity()
         if not user_email:
-            return jsonify(dict(error='Ungültiges/Abgelaufenes token')), 400
+            return jsonify(dict(error='Invalid/expired token passed')), 400
         user = UserManager().get_by_email(email=user_email)
         if not user:
-            return jsonify(dict(error='Ungültiges/Abgelaufenes token')), 400
+            return jsonify(dict(error='Invalid/expired token passed')), 400
         links = manager.get_by_owner(owner_id=user.id)
         if not links:
             return jsonify([]), 200

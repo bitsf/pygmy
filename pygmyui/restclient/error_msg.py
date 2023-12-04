@@ -1,7 +1,7 @@
 import json
 
 
-INVALID_TOKEN = dict(error=["Bitte anmelden um fortzufahren."])
+INVALID_TOKEN = dict(error=["Please log in again to continue."])
 INTERNAL_SERVER_ERROR_API = ["Something went wrong."]
 
 

@@ -28,7 +28,7 @@ function displayToggle(elementId) {
 function validInput(input){
     // if invalid characters return false and change colour
     if (input != input.replace(/[^a-zA-Z0-9]/g, '')){
-        var respText = "Ungültige Zeichen in der Eingabe";
+        var respText = "Invalid characters in input.";
         var checkButtonClass = "btn btn-sm btn-danger";
         var boxColor = 'red';
         document.getElementById('availableStatus').innerHTML = respText;
@@ -53,12 +53,12 @@ function CheckLinkAvailability(){
             dataType: 'json',
             success:function(responsedata){
                 var status = responsedata['ok'];
-                var respText = 'Verfügbar!';
+                var respText = 'Available!';
                 var boxColor = 'green';
                 var checkButtonClass = "btn btn-sm btn-primary";
                 //var checkStatusIconClass = "glyphicon glyphicon-ok form-control-feedback";
                 if(status == false) {
-                    var respText = 'nicht verfügbar!';
+                    var respText = 'Not available!';
                     var boxColor = 'red';
                     //var checkStatusIconClass = "glyphicon glyphicon-remove form-control-feedback";
                     var checkButtonClass = "btn btn-sm btn-danger";

@@ -14,21 +14,21 @@
             </script>
         </a>
     </div>
-    <div>Aufrufe insgesamt: {{clickmeta.total_hits}}</div>
+    <div>Total Hits: {{clickmeta.total_hits}}</div>
 </div>
 <hr>
 <!--Country Stats-->
 <table class="table table-bordered">
     <thead>
         <tr>
-            <th class="col-md-9"><span title="Country">Land</span></th>
-            <th><span title="Link Hits">Aufrufe</span></th>
+            <th class="col-md-9"><span title="Country">Country(code)</span></th>
+            <th><span title="Link Hits">Hits</span></th>
         </tr>
     </thead>
     <tbody>
         {% for country_code, country, country_hits in clickmeta.country_stats %}
         <tr>
-            <td>{{country}}</td>
+            <td>{{country}}({{country_code}})</td>
             <td>{{country_hits}}</td>
         </tr>
         {% endfor %}
@@ -39,8 +39,8 @@
 <table class="table table-bordered">
     <thead>
         <tr>
-            <th class="col-md-9"><span title="Country">Referent</span></th>
-            <th><span title="Link Hits">Aufrufe</span></th>
+            <th class="col-md-9"><span title="Country">Referrer</span></th>
+            <th><span title="Link Hits">Hits</span></th>
         </tr>
     </thead>
     <tbody>
@@ -58,7 +58,7 @@
     <thead>
         <tr>
             <th class="col-md-9"><span title="Country">Timestamp</span></th>
-            <th><span title="Link Hits">Aufrufe</span></th>
+            <th><span title="Link Hits">Hits</span></th>
         </tr>
     </thead>
     <tbody>
@@ -72,8 +72,8 @@
 </table>
 
 <div>
-    <i>* Timestamp Daten sind nur aus den letzten 30 Tagen</i><br>
-    <i>* Zeitangaben in Zeitzone GMT</i>
+    <i>* Timestamp data is of last 30 days only</i><br>
+    <i>* Time is in GMT</i>
 </div>
 
 {% endblock content %}

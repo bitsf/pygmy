@@ -15,8 +15,8 @@ from iso2full import iso2full
 
 AUTH_COOKIE_NAME = settings.AUTH_COOKIE_NAME
 MAX_SHORT_CODE_LEN = 8
-INVALID_CUSTOM_CODE_ERROR = ("Ungültige Eingabe, URL sollte unter 8 Zeichen lang sein"
-                             " und darf nur alphanumerische Zeichen oder Zahlen enthalten")
+INVALID_CUSTOM_CODE_ERROR = ("Invalid value. Length should be <= 8 and should"
+                             " be a valid alphabat, digit or a mix of both")
 VALID_INPUT_CHARS = string.ascii_letters + string.digits
 
 
@@ -77,8 +77,7 @@ def link_shortener(request):
 def get_short_link(request, code):
     if request.method == 'GET':
         try:
-            # schema = 'https://' if request.is_secure() else 'http://'
-            schema = 'https://'
+            schema = 'https://' if request.is_secure() else 'http://'
             url_obj = {}
             url_obj['short_url'] = (
                 schema + request.META['HTTP_HOST'] + '/' + url_obj.get(
